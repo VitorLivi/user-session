@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  redis:
+    container_name: user-session-redis
+    image: redis
+    command: redis-server --requirepass 123
+    ports:
+      - "6379"
+    networks:
+      - user-session-network
+  express:
+    container_name:  user-session-express
+    image: user-session-express
+    build:
+      context: .
+    ports:
+      - "5000"
+    networks:
+      - user-session-network
+    volumes:
+      - ./:/user-session
+  nginx:
+    container_name: user-session-nginx
+    image: user-session-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    networks:
+      - user-session-network
+    ports:
+      - "80:8080"
+networks:
+  user-session-network:
+    driver: bridge
