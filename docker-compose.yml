@@ -15,11 +15,12 @@ services:
     build:
       context: .
     ports:
-      - "5000"
+      - "5000:5000"
     networks:
       - user-session-network
     volumes:
-      - ./:/user-session
+      - ./index.js:/user-session/index.js
+
   nginx:
     container_name: user-session-nginx
     image: user-session-nginx
