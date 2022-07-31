@@ -1,11 +1,12 @@
-FROM node:17
+FROM node:16
 
 WORKDIR /user-session
-COPY . .
+
+COPY ["./package.json", "."]
 
 RUN npm install
 RUN npm install nodemon -g
 
 EXPOSE 5000
 
-ENTRYPOINT ["nodemon", "index.js"]
+ENTRYPOINT ["nodemon", "./src/index.js"]
